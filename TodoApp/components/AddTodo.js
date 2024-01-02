@@ -11,10 +11,11 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-const AddTodo = () => {
+const AddTodo = ({onInsert}) => {
   const [text, setText] = useState('');
 
   const onPress = () => {
+    onInsert(text);
     setText('');
     Keyboard.dismiss();
   };
