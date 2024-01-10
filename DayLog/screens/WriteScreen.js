@@ -5,20 +5,29 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import WriteHeader from '../components/WriteHeader';
 import WriteEditor from '../components/WriteEditor';
+import {useNavigation} from '@react-navigation/native';
+import LogContext from '../contexts/LogContext';
 
 const WriteScreen = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const navigation = useNavigation();
+
+  const {onCreate} = useContext(LogContext);
+  const onSave = () => {
+    onCreate({title, body, date: new Date().toISOString()});
+    navigation.pop();
+  };
   return (
     <SafeAreaView style={styles.block}>
       <KeyboardAvoidingView
         style={styles.avoidingView}
         behavior={Platform.select({ios: 'padding'})}>
-        <WriteHeader />
+        <WriteHeader onSave={onSave} />
         <WriteEditor
           title={title}
           onChangeTitle={setTitle}
