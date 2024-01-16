@@ -2,6 +2,7 @@ import {View, Text, Pressable, Platform, StyleSheet} from 'react-native';
 import React from 'react';
 import {format, formatDistanceToNow} from 'date-fns';
 import {ko} from 'date-fns/locale';
+import {useNavigation} from '@react-navigation/native';
 function formatDate(date) {
   const d = new Date(date);
   const now = Date.now();
@@ -31,8 +32,16 @@ function truncate(text) {
 
 const FeedListItem = ({log}) => {
   const {title, body, date} = log;
+  const navigation = useNavigation();
+
+  const onPress = () => {
+    navigation.navigate('Write', {
+      log,
+    });
+  };
   return (
     <Pressable
+      onPress={onPress}
       style={({pressed}) => [
         styles.block,
         Platform.select({
