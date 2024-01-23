@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "377752497084",
+    "project_id": "public-gallery-5040b",
+    "storage_bucket": "public-gallery-5040b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377752497084:android:304080842eb9a61e6c19b9",
+        "android_client_info": {
+          "package_name": "com.publicgalleryfishmanchoi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4jjTm5-djU95HOH-IQHMxoZWr7zCTAWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
