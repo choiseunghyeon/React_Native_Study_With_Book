@@ -36,7 +36,6 @@ const SetupProfile = () => {
         includeBase64: Platform.OS === 'android',
       },
       res => {
-        console.log('callback res ', res);
         if (res.didCancel) {
           return;
         }
@@ -50,13 +49,11 @@ const SetupProfile = () => {
 
     let photoURL = null;
 
-    console.log('response ', response);
     if (response) {
       const asset = response.assets[0];
       const extension = asset.fileName.split('.').pop();
       const reference = storage().ref(`/profile/${uid}.${extension}`);
 
-      console.log('reference ', reference);
       if (Platform.OS === 'android') {
         await reference.putString(asset.base64, 'base64', {
           contentType: asset.type,
@@ -64,13 +61,10 @@ const SetupProfile = () => {
       } else {
         await reference.putFile(asset.uri);
       }
-      console.log('putFile');
 
       photoURL = response ? await reference.getDownloadURL() : null;
-      console.log('download');
     }
 
-    console.log('photoURL ', photoURL);
     const user = {
       id: uid,
       displayName: displayName,

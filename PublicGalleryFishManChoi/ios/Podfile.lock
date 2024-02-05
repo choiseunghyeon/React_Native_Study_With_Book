@@ -1012,6 +1012,8 @@ PODS:
   - React-jsinspector (0.70.15)
   - React-logger (0.70.15):
     - glog
+  - react-native-get-random-values (1.10.0):
+    - React-Core
   - react-native-image-picker (7.1.0):
     - React-Core
   - react-native-safe-area-context (4.8.2):
@@ -1130,6 +1132,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1221,6 +1224,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-get-random-values:
+    :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-safe-area-context:
@@ -1308,6 +1313,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d2eebcd5a432f90be3baa5d1309f47d05478ea61
   React-jsinspector: bfedded1f4f562d29c2d4a8bb795c9a150a739e4
   React-logger: 31f198387a04172be49fe38e41a082560a81aeeb
+  react-native-get-random-values: 384787fd76976f5aec9465aff6fa9e9129af1e74
   react-native-image-picker: a82b781c14f1f5c16953290bee2039db43822517
   react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   React-perflogger: 010e98d3335e5185a8f7496babca50d82a042e84
