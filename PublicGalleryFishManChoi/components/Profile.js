@@ -5,20 +5,21 @@ import {
   FlatList,
   Image,
   StyleSheet,
+  RefreshControl,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {getUser} from '../lib/users';
-import {getPosts} from '../lib/posts';
 import Avatar from './Avatar';
 import PostGridItem from './PostGridItem';
+import usePosts from '../hooks/usePosts';
 
 const Profile = ({userId}) => {
   const [user, setUser] = useState(null);
-  const [posts, setPosts] = useState(null);
+  const {noMorePost, onLoadMore, onRefresh, posts, refreshing} =
+    usePosts(userId);
 
   useEffect(() => {
     getUser(userId).then(setUser);
-    getPosts({userId}).then(setPosts);
   }, [userId]);
 
   if (!user || !posts) {
@@ -38,6 +39,20 @@ const Profile = ({userId}) => {
           <Avatar source={user.photoURL && {uri: user.photoURL}} size={128} />
           <Text style={styles.username}>{user.displayName}</Text>
         </View>
+      }
+      onEndReached={onLoadMore}
+      onEndReachedThreshold={0.25}
+      ListFooterComponent={
+        !noMorePost && (
+          <ActivityIndicator
+            style={styles.bottomSpinner}
+            size={32}
+            color="#6200ee"
+          />
+        )
+      }
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
       }
     />
   );
@@ -64,5 +79,8 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 24,
     color: '#424242',
+  },
+  bottomSpinner: {
+    height: 128,
   },
 });
