@@ -17,6 +17,7 @@ import {useUserContext} from '../contexts/UserContext';
 import storage from '@react-native-firebase/storage';
 import {v4 as uuid} from 'uuid';
 import {createPost} from '../lib/posts';
+import events from '../lib/events';
 const UploadScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
@@ -47,6 +48,8 @@ const UploadScreen = () => {
     const photoURL = await reference.getDownloadURL();
 
     await createPost({description, photoURL, user});
+
+    events.emit('refresh');
   }, [res, user, description, navigation]);
 
   useEffect(() => {

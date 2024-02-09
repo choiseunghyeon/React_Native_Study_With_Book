@@ -12,12 +12,15 @@ import {getUser} from '../lib/users';
 import Avatar from './Avatar';
 import PostGridItem from './PostGridItem';
 import usePosts from '../hooks/usePosts';
+import {useUserContext} from '../contexts/UserContext';
+import events from '../lib/events';
 
 const Profile = ({userId}) => {
   const [user, setUser] = useState(null);
   const {noMorePost, onLoadMore, onRefresh, posts, refreshing} =
     usePosts(userId);
-
+  const {user: me} = useUserContext();
+  const isMyProfile = me.id === userId;
   useEffect(() => {
     getUser(userId).then(setUser);
   }, [userId]);

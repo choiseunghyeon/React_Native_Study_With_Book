@@ -1,11 +1,14 @@
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {PAGE_SIZE, getNewerPosts, getOlderPosts, getPosts} from '../lib/posts';
+import {useUserContext} from '../contexts/UserContext';
+import usePostsEventEffect from './usePostsEventEffect';
 
 export default function usePosts(userId) {
   const [posts, setPosts] = useState(null);
 
   const [noMorePost, setNoMorePost] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const {user} = useUserContext();
 
   const onLoadMore = async () => {
     if (noMorePost || !posts || posts.length < PAGE_SIZE) {
@@ -19,7 +22,7 @@ export default function usePosts(userId) {
     setPosts(posts.concat(olderPosts));
   };
 
-  const onRefresh = async () => {
+  const onRefresh = useCallback(async () => {
     if (!posts || posts.length === 0 || refreshing) {
       return;
     }
@@ -33,8 +36,24 @@ export default function usePosts(userId) {
       return;
     }
     setPosts(newerPosts.concat(posts));
-  };
+  }, [posts, refreshing, userId]);
 
+  const removePost = useCallback(
+    postId => {
+      setPosts(posts.filter(post => post.id === postId));
+    },
+    [posts],
+  );
+
+  const updatePost = useCallback(
+    ({postId, description}) => {
+      const nextPosts = posts.map(post =>
+        postId === post.id ? {...post, description} : post,
+      );
+      setPosts(nextPosts);
+    },
+    [posts],
+  );
   useEffect(() => {
     getPosts({userId}).then(_posts => {
       setPosts(_posts);
@@ -43,6 +62,13 @@ export default function usePosts(userId) {
       }
     });
   }, [userId]);
+
+  usePostsEventEffect({
+    refresh: onRefresh,
+    removePost,
+    updatePost,
+    enabled: !userId || userId === user.id,
+  });
 
   return {
     posts,

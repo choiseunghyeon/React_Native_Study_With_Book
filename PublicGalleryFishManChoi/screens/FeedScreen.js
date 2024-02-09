@@ -9,9 +9,11 @@ import {
 import React, {useEffect, useState} from 'react';
 import PostCard from '../components/PostCard';
 import usePosts from '../hooks/usePosts';
+import events from '../lib/events';
 
 const FeedScreen = () => {
   const {noMorePost, onLoadMore, onRefresh, posts, refreshing} = usePosts();
+
   return (
     <FlatList
       data={posts}
