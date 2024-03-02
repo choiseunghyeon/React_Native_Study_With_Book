@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  Button,
 } from 'react-native';
 import React, {useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -16,6 +17,7 @@ import SignButtons from '../components/SignButtons';
 import {signIn, signUp} from '../lib/auth';
 import {getUser} from '../lib/users';
 import {useUserContext} from '../contexts/UserContext';
+import authLib from '../authLib';
 
 const SignInScreen = ({navigation, route}) => {
   const {isSignUp} = route.params ?? {};
@@ -66,6 +68,14 @@ const SignInScreen = ({navigation, route}) => {
       setLoading(false);
     }
   };
+  const handleLogin = async () => {
+    try {
+      const result = await authLib.loginWithGoogle();
+      console.log('result', result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <KeyboardAvoidingView
       style={styles.keyboardAvoidingView}
@@ -84,6 +94,7 @@ const SignInScreen = ({navigation, route}) => {
             onSubmit={onSubmit}
             loading={loading}
           />
+          <Button title="Login with Google" onPress={handleLogin} />
         </View>
       </SafeAreaView>
     </KeyboardAvoidingView>
