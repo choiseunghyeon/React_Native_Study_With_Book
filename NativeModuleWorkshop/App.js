@@ -27,39 +27,45 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import ToastModule from './Toast';
+import {getBrightness, setBrightness} from './Brightness';
 
 const App = () => {
-  const onPress = () => {
-    Alert.alert('Hello World');
-    console.log({
-      string: Alert.STRING_VALUE,
-      number: Alert.NUMBER_VALUE,
-    });
-    // ToastModule.show('Hello World', ToastModule.SHORT);
+  const [value, setValue] = React.useState(-1);
+  const onPress = async () => {
+    const brightness = await getBrightness();
+    setValue(brightness);
+  };
+
+  const onPressLow = () => {
+    setBrightness(0.25);
+  };
+
+  const onPressHigh = () => {
+    setBrightness(1);
   };
   return (
-    <SafeAreaView>
-      <Button title="Press me" onPress={onPress} />
+    <SafeAreaView style={styles.block}>
+      <Button title="Update Brightness" onPress={onPress} />
+      <View style={styles.textWrapper}>
+        <Text style={styles.text}>{value}</Text>
+      </View>
+      <Button title="Set Low Brightness" onPress={onPressLow} />
+      <Button title="Set High Brightness" onPress={onPressHigh} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  block: {
+    flex: 1,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  textWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  text: {
+    fontSize: 64,
   },
 });
 
